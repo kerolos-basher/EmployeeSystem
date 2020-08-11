@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Idintitycorepro.Models.Employee>
+
+@using Microsoft.AspNetCore.Identity;
+@using Idintitycorepro.Data;
+@inject SignInManager<ApplicationUser> _signInManager;
+@{
+    ViewData["Title"] = "AllEmployees";
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<div class="container">
+    <a asp-controller="Employee" asp-action="CreateNew" class="btn btn-primary">CreateNewEmployee</a>
+    <div class="row ">
+        @{ foreach (var item in Model)
+            {
+                <div class="col-sm-4 mt-4">
+                    <div class="card  ">
+                        <div class="card-header">
+                            @item.Name
+                        </div>
+                        <div class="card-body ">
+                            @{var photopath = "~/images/" + (item.photourl ?? "first.png");
+                            }
+                            <img src="@photopath" asp-append-version="true" style="width :100%;height:300px" class="pb-4" />
+                            <a asp-controller="Employee" asp-action="Employeedetail" asp-route-id="@item.ID"
+                               class="btn btn-info">details</a>
+                            @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {
+                                <!-- <a href="/Home/Employeedetail/" class="btn btn-primary">Details</a>-->
+                                <a asp-controller="Employee" asp-action="EditEmployee" asp-route-id="@item.ID"
+                                   class="btn btn-success">Update</a>
+                                <a asp-controller="Employee" asp-action="DeleteEmployee" asp-route-id="@item.ID"
+                                   class="btn btn-danger">Delete</a>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+
+

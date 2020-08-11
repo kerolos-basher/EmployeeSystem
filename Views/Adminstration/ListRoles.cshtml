@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityRole>
+@{
+    ViewData["Title"] = "All Roles";
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.Any())
+{
+         <div class="col-sm-5">
+        <a asp-controller="Adminstration" asp-action="CreateRole" class="btn btn-primary m-2">CreateNewRole</a>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-12">
+                <div class="card m-4 ">
+                    <div class="card-header">
+                        @item.Id
+                    </div>
+                    <div class="card-body ">
+
+                        @item.Name
+                    </div>
+
+
+
+                    <div class="card-footer ">
+                        <form asp-action="DeleteRole" asp-controller="Adminstration" method="post" asp-route-id="@item.Id">
+                            <a asp-controller="Adminstration" asp-action="EditRole" asp-route-id="@item.Id"
+                               class="btn btn-success">Edit Role</a>
+                            <button type="submit" onclick="return confirm('Are you shure that you wnt to delete : @item.Name')" class="btn btn-danger">Delete Role</button>
+                        </form>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        }
+
+
+        }
+        else
+        {
+        <div class="col-sm-12">
+            <div class="card  ">
+                <div class="card-header">
+                    No Role Add Yet
+                </div>
+                <div class="card-body ">
+                    Usee Buttom To Create New Role
+                </div>
+                <div class="card-footer ">
+                    <a asp-controller="Adminstration" asp-action="CreateRole" class="btn btn-primary">CreateNewRole</a>
+                </div>
+            </div>
+        </div>
+        }
+
+
+

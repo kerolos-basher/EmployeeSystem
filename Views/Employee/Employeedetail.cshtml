@@ -1,0 +1,46 @@
+﻿@model Idintitycorepro.Models.Employee
+
+@{
+    ViewData["Title"] = "Employeedetail";
+    var photopath = "~/images/" + (Model.photourl ?? "first.png");
+}
+
+<h1>Employeedetail</h1>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.photourl)
+        </dt>
+        <dd class="col-sm-10">
+          
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@photopath" asp-append-version="true" alt="Card image cap">         
+            </div>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-controller="Employee" asp-action="AllEmployees">Back to List</a>
+</div>

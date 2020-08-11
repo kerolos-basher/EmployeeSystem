@@ -1,0 +1,68 @@
+﻿@model Idintitycorepro.ViewModel.EditEmployeeViewModel
+
+@{
+    ViewData["Title"] = "EditEmployee";
+    var photopath = "~/images/" + (Model.ExistingPhotoPath ?? "first.png");
+}
+
+<h1>EditEmployee</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form enctype="multipart/form-data" asp-action="EditEmployee">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Department" class="control-label"></label>
+                <select asp-for="Department" class="form-control"
+                        asp-items="Html.GetEnumSelectList<Dpt>()">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="Department" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="photo" class="control-label"></label>
+                <div class="col-sm-10">
+                    <div class="custom-file">
+                        <input asp-for="photo" class="form-control custom-file-input" />
+                        <span class="custom-file-label">click to change Photo..</span>
+                        <span asp-validation-for="photo" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <img class="img-thumbnail" asp-append-version="true" src="@photopath" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AllEmployees">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next(".custom-file-label").html(fileName);
+            })
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "All Users";
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.Any())
+{
+    <div class="col-sm-5">
+        <a asp-controller="Account" asp-action="Register" class="btn btn-primary m-2">Create New User</a>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-12">
+            <div class="card m-4 ">
+                <div class="card-header">
+                    @item.Id
+                </div>
+                <div class="card-body ">
+
+                    @item.UserName
+                </div>
+                <div class="card-footer ">
+                    <form asp-action="DeleteUser" asp-controller="Adminstration" method="post" asp-route-id="@item.Id">
+                        <a asp-controller="Adminstration" asp-action="EditUser" asp-route-id="@item.Id"
+                           class="btn btn-success">Edit User</a>
+                        <button type="submit" onclick="return confirm('Are you shure that you wnt to delete : @item.UserName')"  class="btn btn-danger">Delete User</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    }
+
+
+}
+else
+{
+    <div class="col-sm-12">
+        <div class="card  ">
+            <div class="card-header">
+                No Role Add Yet
+            </div>
+            <div class="card-body ">
+                Usee Buttom To Create New Role
+            </div>
+            <div class="card-footer ">
+                <a asp-controller="Adminstration" asp-action="CreateRole" class="btn btn-primary">CreateNewRole</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+
